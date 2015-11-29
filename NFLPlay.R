@@ -30,3 +30,8 @@ qplot(x=playcomp$yfog,xlab="Yardline",ylim=c(0,100),y=playcomp$playsran,ylab="Nu
       color=as.factor(playcomp$dwn),
       shape=playcomp$type) + scale_shape_manual(values=c(79,16)) + theme(legend.position="bottom")
 
+
+#Use facet_wrap to have multiple graphs on one plot
+plot_one <- qplot(data=playcomp, x=yfog,xlab="Yardline",y=playsran,ylim=c(0,100),
+                  ylab="Number of Plays")#,color=as.factor(type))#+ geom_point() 
+plot_one + facet_wrap(type~dwn)
