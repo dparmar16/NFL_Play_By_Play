@@ -7,10 +7,8 @@ nfldata <- read.csv(file.choose(), header = TRUE)
 attach(nfldata)
 head(nfldata)
 
-
 library(ggplot2)
 library(dplyr)
-
 
 #Look at all rush and pass plays
 nfl_off <- nfldata[type=="RUSH" | type=="PASS",]
@@ -33,6 +31,7 @@ qplot(x=playcomp$yfog,xlab="Yardline",ylim=c(0,100),y=playcomp$playsran,ylab="Nu
       color=as.factor(playcomp$dwn),
       shape=playcomp$type) + scale_shape_manual(values=c(79,16)) + theme(legend.position="bottom")
 
+<<<<<<< HEAD
 #Reduce print output by not printing warnings
 ```{r warning=FALSE}
 #Use facet_wrap to have multiple graphs on one plot
@@ -40,3 +39,10 @@ plot_one <- qplot(data=playcomp, x=yfog,xlab="Yardline",y=playsran,ylim=c(0,100)
                   ylab="Number of Plays",color=as.factor(type))#,color=as.factor(type))#+ geom_point() 
 plot_one + facet_wrap(~dwn) + scale_color_discrete(name="Play Type", labels=c("Pass","Rush"))
 ```
+=======
+
+#Use facet_wrap to have multiple graphs on one plot
+plot_one <- qplot(data=playcomp, x=yfog,xlab="Yardline",y=playsran,ylim=c(0,100),
+                  ylab="Number of Plays")#,color=as.factor(type))#+ geom_point() 
+plot_one + facet_wrap(type~dwn)
+>>>>>>> 0b009b3d0d96c0fd04c4258349731428f68c1837
