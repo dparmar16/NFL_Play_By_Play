@@ -45,4 +45,3 @@ plot_one + facet_wrap(~dwn) + scale_color_discrete(name="Play Type", labels=c("P
 plot_one <- qplot(data=playcomp, x=yfog,xlab="Yardline",y=playsran,ylim=c(0,100),
                   ylab="Number of Plays")#,color=as.factor(type))#+ geom_point() 
 plot_one + facet_wrap(type~dwn)
->>>>>>> 0b009b3d0d96c0fd04c4258349731428f68c1837
