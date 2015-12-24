@@ -1,0 +1,17 @@
+{
+    "contents" : "#Generate drive numbers based on the data\ninstall.packages(\"ggplot2\")\nlibrary(ggplot2)\n\n#First look at the data already loaded\nhead(nfldata)\n\n#Create binary variable ind\n#ind equals true if dseq number increases or stays the same (drive continues)\n#ind equals false if dseq number decreases (to 0 or 1 signalling new drive)\nind <- with(nfldata, dseq[-1L] >= dseq[-length(dseq)])\nhead(ind)\n\n#Create drive number vector to store values\ndrivenumber = c()\ni = 1\n\n#For loop to assign drive number\nfor (x in 1:(nrow(nfldata))) {\n  if (ind[x] == FALSE) {\n    i <- i + 1\n  }\n  drivenumber[x] <- i\n}\n\n#Look at drivenumber vector\ndrivenumber[1:25]\n\n#Get counts data frame\ndrive_tab <- rle(sort(drivenumber))\ndrive_table <- data.frame(number=drive_tab$values,count=drive_tab$lengths)\nhead(drive_table)\n\n#hist(drive_table)\nqplot(drive_table$count,data=drive_table, geom=\"histogram\", binwidth = 1, \n      xlab=\"Plays in Drive\",ylab=\"Number of Drives\")\n",
+    "created" : 1449883691646.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2866652905",
+    "id" : "B12D07E3",
+    "lastKnownWriteTime" : 1450950199,
+    "path" : "~/R/NFL_Play_By_Play/CreateDriveNumber.R",
+    "project_path" : "CreateDriveNumber.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

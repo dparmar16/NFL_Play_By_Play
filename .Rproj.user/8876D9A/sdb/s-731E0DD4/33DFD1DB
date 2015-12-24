@@ -1,0 +1,18 @@
+{
+    "contents" : "#Get 2015 Weeks 1-8 data for free from \n#http://www.armchairanalysis.com/data.php\n#Load in Play.csv\nnfldata <- read.csv(file.choose(), header = TRUE)\n\n#Attack and take a look at data\nattach(nfldata)\nhead(nfldata)\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\n#Look at all rush and pass plays\nnfl_off <- nfldata[type==\"RUSH\" | type==\"PASS\",]\n\n#Can use either dplyr or plyr\n#If you want to use dplyr, then can do this:\n#library(plyr)\n#nfl_off %>% group_by(yfog) %>% select(type) %>% summarise(lengthtype = length(type))\n#Need to remove dplyr to use plyr and ddply\n#remove.packages(\"dplyr\")\n\n#Choose to use plyr package and ddply command\n#Get number of plays by yardline (relative to goaline), pass or run, and 1st/2nd/3rd/4th down\nplaycomp <- ddply(nfl_off, .(yfog,type,dwn),summarise, playsran = length(pid))\nhead(playcomp)\n\n#Use qplot function from ggplot2\n#Get number of plays on y axis, yardline on x axis, colored by down, shaped by pass/run\nqplot(x=playcomp$yfog,xlab=\"Yardline\",ylim=c(0,100),y=playcomp$playsran,ylab=\"Number of Plays\",\n      color=as.factor(playcomp$dwn),\n      shape=playcomp$type) + scale_shape_manual(values=c(79,16)) + theme(legend.position=\"bottom\")\n\n#Reduce print output by not printing warnings\n```{r warning=FALSE}\n#Use facet_wrap to have multiple graphs on one plot\nplot_one <- qplot(data=playcomp, x=yfog,xlab=\"Yardline\",y=playsran,ylim=c(0,100),\n                  ylab=\"Number of Plays\",color=as.factor(type))#,color=as.factor(type))#+ geom_point() \nplot_one + facet_wrap(~dwn) + scale_color_discrete(name=\"Play Type\", labels=c(\"Pass\",\"Rush\"))\n```\n\n\n#Use facet_wrap to have multiple graphs on one plot\nplot_one <- qplot(data=playcomp, x=yfog,xlab=\"Yardline\",y=playsran,ylim=c(0,100),\n                  ylab=\"Number of Plays\")#,color=as.factor(type))#+ geom_point() \nplot_one + facet_wrap(type~dwn)\n",
+    "created" : 1450407111395.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1547482704",
+    "id" : "33DFD1DB",
+    "lastKnownWriteTime" : 1450948974,
+    "path" : "~/R/NFL_Play_By_Play/NFLPlay.R",
+    "project_path" : "NFLPlay.R",
+    "properties" : {
+        "notebook_format" : "html_document",
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
